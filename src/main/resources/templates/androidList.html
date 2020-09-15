@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .PADlist,.table_head{
+            border: solid black 3px;
+        }
+        tr{
+            border-top: solid black 3px;
+        }
+        tr td:nth-last-child(1){
+            border: none;
+        }
+        td{
+            border-right: solid black 3px;
+        }
+        .caozuo a{
+            text-decoration: none;
+        }
+
+        .AddPAD{
+            width: 300px;
+        }
+        .AddPAD span{
+            display: block;
+            float: right;
+        }
+    </style>
+
+<!--    <script>-->
+<!--        $(function () {-->
+<!--            $("#myTabContent a").click(function (e) {-->
+<!--                $("#myTab li").tab('show');-->
+<!--            })-->
+<!--        });-->
+<!--    </script>-->
+
+</head>
+<body>
+<div>
+    <form method="post" action="/Search">
+        <span>设备类型<input name="search_type" type="text"></span>
+        <span>设备规格<input name="search_spec" type="text"></span>
+        <span>编码<input name="search_id" type="text"></span>
+        <span><button type="submit">查询</button></span>
+    </form>
+</div>
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+        <a href="#home" data-toggle="tab">
+            安卓PAD列表
+        </a>
+    </li>
+    <li><a href="#ios" data-toggle="tab">添加设备</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="home">
+        <table class="PADlist">
+            <tbody>
+            <tr class="table_head">
+                <td>编号</td>
+                <td>设备类型</td>
+                <td>设备规格</td>
+                <td>所属工站</td>
+                <td>所属工位</td>
+                <td>分辨率</td>
+                <td>核心数</td>
+                <td>内存</td>
+                <td>电池容量</td>
+                <td>供应商</td>
+                <td>生产商</td>
+                <td>出厂编号</td>
+                <td>用途</td>
+                <td>采购日期</td>
+                <td>资产负责人</td>
+                <td>所有权部门</td>
+                <td>操作</td>
+            </tr>
+
+            <tr th:if="${androidPAD!=null}">
+                <td th:text="${androidPAD.id}"></td>
+                <td th:text="${androidPAD.type}"></td>
+                <td th:text="${androidPAD.spec}"></td>
+                <td th:text="${androidPAD.station_id}"></td>
+                <td th:text="${androidPAD.cell_id}"></td>
+                <td th:text="${androidPAD.pADsc}"></td>
+                <td th:text="${androidPAD.pADNucleus}"></td>
+                <td th:text="${androidPAD.pADMemory}"></td>
+                <td th:text="${androidPAD.capacity}"></td>
+                <td th:text="${androidPAD.supplier}"></td>
+                <td th:text="${androidPAD.manufacturer}"></td>
+                <td th:text="${androidPAD.factoryNumber}"></td>
+                <td th:text="${androidPAD.purpose}"></td>
+                <td th:text="${androidPAD.buyDate}"></td>
+                <td th:text="${androidPAD.person}"></td>
+                <td th:text="${androidPAD.organization}"></td>
+                <td class="caozuo">
+                    <a href="#" data-toggle="modal" data-target="#myModal">修改</a>
+                    /
+                    <a th:href="@{/deletePAD/}+${androidPAD.id}">删除</a>
+                </td>
+            </tr>
+
+
+
+            <tr th:each="androidPAD:${androidPADs}">
+                <td th:text="${androidPAD.id}"></td>
+                <td th:text="${androidPAD.type}"></td>
+                <td th:text="${androidPAD.spec}"></td>
+                <td th:text="${androidPAD.station_id}"></td>
+                <td th:text="${androidPAD.cell_id}"></td>
+                <td th:text="${androidPAD.pADsc}"></td>
+                <td th:text="${androidPAD.pADNucleus}"></td>
+                <td th:text="${androidPAD.pADMemory}"></td>
+                <td th:text="${androidPAD.capacity}"></td>
+                <td th:text="${androidPAD.supplier}"></td>
+                <td th:text="${androidPAD.manufacturer}"></td>
+                <td th:text="${androidPAD.factoryNumber}"></td>
+                <td th:text="${androidPAD.purpose}"></td>
+                <td th:text="${androidPAD.buyDate}"></td>
+                <td th:text="${androidPAD.person}"></td>
+                <td th:text="${androidPAD.organization}"></td>
+                <td class="caozuo">
+                    <a data-toggle="modal" data-target="#myModal">修改</a>
+                    /
+                    <a th:href="@{/deletePAD/}+${androidPAD.id}">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="ios">
+        <div class="AddPAD">
+            <form method="post" action="/Add">
+                <br>
+                <span>设备编码:<input  name="id" type="text"><hr></span>
+                <span>设备类型:<input name="type" type="text"><hr></span>
+                <span>设备规格:<input name="spec" type="text"><hr></span>
+                <span>所属工站:<input name="station" type="text"><hr></span>
+                <span>所属工位:<input name="cell" type="text"><hr></span>
+                <span>分辨率:<input name="pADsc" type="text"><hr></span>
+                <span>核心数:<input name="pADNucleus" type="text"><hr></span>
+                <span>内存:<input name="pADMemory" type="text"><hr></span>
+                <span>电池容量:<input name="capacity" type="text"><hr></span>
+                <span>供应商:<input name="supplier" type="text"><hr></span>
+                <span>生产商:<input name="manufacturer" type="text"><hr></span>
+                <span>出厂编号:<input name="factoryNumber" type="text"><hr></span>
+                <span>用途:<input name="purpose" type="text"><hr></span>
+                <span>采购日期:<input name="buyDate" type="text"><hr></span>
+                <span>资产负责人:<input name="person" type="text"><hr></span>
+                <span>所有权部门:<input name="organization" type="text"><hr></span>
+                <span>备注:<input name="remarks" type="text"><hr></span>
+
+                <button style="float: right; margin-right: 100px; margin-bottom: 40px" type="submit">提交</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- 修改模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h2 style="text-align: center" class="modal-title" id="myModalLabel">
+                    设备信息修改
+                </h2>
+                <form method="post">
+                    <div class="modal-body AddPAD">
+                        <span>设备编码:<input  name="id" type="text"><hr></span>
+                        <span>设备类型:<input name="type" type="text"><hr></span>
+                        <span>设备规格:<input name="spec" type="text"><hr></span>
+                        <span>所属工站:<input name="station" type="text"><hr></span>
+                        <span>所属工位:<input name="cell" type="text"><hr></span>
+                        <span>分辨率:<input name="pADsc" type="text"><hr></span>
+                        <span>核心数:<input name="pADNucleus" type="text"><hr></span>
+                        <span>内存:<input name="pADMemory" type="text"><hr></span>
+                        <span>电池容量:<input name="capacity" type="text"><hr></span>
+                        <span>供应商:<input name="supplier" type="text"><hr></span>
+                        <span>生产商:<input name="manufacturer" type="text"><hr></span>
+                        <span>出厂编号:<input name="factoryNumber" type="text"><hr></span>
+                        <span>用途:<input name="purpose" type="text"><hr></span>
+                        <span>采购日期:<input name="buyDate" type="text"><hr></span>
+                        <span>资产负责人:<input name="person" type="text"><hr></span>
+                        <span>所有权部门:<input name="organization" type="text"><hr></span>
+                        <span>备注:<input name="remarks" type="text"><hr></span>
+                    </div>
+                    <div class="modal-footer">
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">关闭-->
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

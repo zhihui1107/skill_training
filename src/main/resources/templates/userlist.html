@@ -3,13 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>用户管理</title>
+    <style>
+        table,tr,td{
+            border: solid black 1px;
+        }
+    </style>
 </head>
 <body>
 <table>
     <tbody>
-    <tr th:each="i:${users}">
-        <td th:text="${i.id}"></td>
-        <td th:text="${i.company_id}"></td>
+    <tr th:each="user:${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.office_id}"></td>
+        <td th:text="${user.login_name}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.no}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.phone}"></td>
+        <td th:text="${user.mobile}"></td>
+        <td th:text="${user.user_type}"></td>
+        <td th:text="${user.photo}"></td>
+        <td th:text="${user.login_ip}"></td>
+        <td th:text="${user.login_flag}"></td>
+        <td th:text="${user.create_by}"></td>
+        <td th:text="${user.update_by}"></td>
+        <td th:text="${user.remarks}"></td>
+        <td th:text="${user.del_flag}"></td>
+
     </tr>
     </tbody>
 </table>
