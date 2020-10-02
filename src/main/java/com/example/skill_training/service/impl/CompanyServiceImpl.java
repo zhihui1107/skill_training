@@ -23,8 +23,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company select_ById(int id) {
+    public Company select_ById(String id) {
         return companyMapper.selectById(id);
+    }
+
+    @Override
+    public List<Company> other_Company(String id) {
+        return companyMapper.otherCompany(id);
     }
 
     @Override

@@ -4,29 +4,34 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
     <meta charset="UTF-8">
     <title>企业</title>
 </head>
 <body>
-<ul id="myTab" class="nav nav-tabs">
+<ul class="nav nav-tabs">
     <li class="active">
-        <a href="#home" data-toggle="tab">
-            企业列表
-        </a>
+        <a th:href="@{/company}">企业列表</a>
     </li>
-    <li><a href="#ios" data-toggle="tab">企业添加</a></li>
+    <li><a th:href="@{/form_company}">企业添加</a></li>
 </ul>
-<div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade in active" id="home">
-        <div>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <div class="demoTable">
             <form method="post" action="oneCompany">
-                <span>企业名称</span>
-                <input name="select_name" type="text" value=""/>
-                <button type="submit">查询</button>
+                <span>企业名称：</span>
+                <div class="layui-inline">
+                    <input class="layui-input" name="select_name" type="text" value=""/>
+                </div>
+                <button class="layui-btn" type="submit">查询</button>
             </form>
         </div>
-        <table>
-            <tbody>
+        <table class="layui-table">
+            <thead>
             <tr>
                 <td>企业名称</td>
                 <td>组织机构代码</td>
@@ -40,23 +45,9 @@
                 <td>备注</td>
                 <td>操作</td>
             </tr>
-            <tr th:if="${company1!=null}">
-                <td th:text="${company1.enterName}">111</td>
-                <td th:text="${company1.enterCode}"></td>
-                <td th:text="${company1.enterLevel}"></td>
-                <td th:text="${company1.enterNature}"></td>
-                <td th:text="${company1.enterCapital}"></td>
-                <td th:text="${company1.enterLperson}"></td>
-                <td th:text="${company1.enterLpCard}"></td>
-                <td th:text="${company1.enterAddress}"></td>
-                <td th:text="${company1.emailCode}"></td>
-                <td th:text="${company1.enterRemarks}"></td>
-                <td>
-                    <a href="#ios" data-toggle="tab">修改</a>
-                    <a th:href="@{/delete_company/}+${company1.enterName}">删除</a>
-                </td>
-            </tr>
-            <tr th:each="company:${companies}">
+            </thead>
+            <tbody>
+            <tr th:if="${company!=null}">
                 <td th:text="${company.enterName}"></td>
                 <td th:text="${company.enterCode}"></td>
                 <td th:text="${company.enterLevel}"></td>
@@ -68,87 +59,30 @@
                 <td th:text="${company.emailCode}"></td>
                 <td th:text="${company.enterRemarks}"></td>
                 <td>
-                    <a href="" data-toggle="modal" data-target="#myModal">修改</a>
-                    <a th:href="@{/delete_company/}+${company.enterName}">删除</a>
+                    <a class="layui-btn layui-btn-xs" th:href="@{/update_company/}+${company.id}">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.enterName}">删除</a>
+                </td>
+            </tr>
+            <tr th:each="company:${companyList}">
+                <td th:text="${company.enterName}"></td>
+                <td th:text="${company.enterCode}"></td>
+                <td th:text="${company.enterLevel}"></td>
+                <td th:text="${company.enterNature}"></td>
+                <td th:text="${company.enterCapital}"></td>
+                <td th:text="${company.enterLperson}"></td>
+                <td th:text="${company.enterLpCard}"></td>
+                <td th:text="${company.enterAddress}"></td>
+                <td th:text="${company.emailCode}"></td>
+                <td th:text="${company.enterRemarks}"></td>
+                <td>
+                    <a class="layui-btn layui-btn-xs" th:href="@{/update_company/}+${company.id}">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.enterName}">删除</a>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div class="tab-pane fade" id="ios">
-        <form method="post" action="insert_company" >
-            <span>企业名称</span>
-            <input name="enterName" type="text"/>*
-            <hr />
-            <span>组织机构代码</span>
-            <input name="enterCode" type="text"/>
-            <hr />
-            <span>企业层次</span>
-            <input name="enterLevel" type="text"/>
-            <hr />
-            <span>企业性质</span>
-            <input name="enterNature" type="text"/>
-            <hr />
-            <span>企业注册资本</span>
-            <input name="enterCapital" type="text"/>
-            <hr />
-            <span>法人</span>
-            <input name="enterLperson" type="text"/>
-            <hr />
-            <span>法人身份证</span>
-            <input name="enterLpCard" type="text"/>
-            <hr />
-            <span>地址</span>
-            <input name="enterAddress" type="text"/>
-            <hr />
-            <span>邮政编码</span>
-            <input name="emailCode" type="text"/>
-            <hr />
-            <span>备注</span>
-            <input name="enterRemarks" type="text"/>
-            <hr />
-            <button type="submit">保存</button>
-        </form>
-    </div>
 </div>
-<!-- 修改模态框 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <h2 style="text-align: center" class="modal-title" id="myModalLabel">
-                设备信息修改
-            </h2>
-            <form method="post">
-                <div class="modal-body AddPAD">
-                    <span>企业名称:<input name="enterName" type="text"><hr></span>
-                    <span>组织机构代码:<input name="enterCode" type="text"><hr></span>
-                    <span>企业层次:<input name="enterLevel" type="text"><hr></span>
-                    <span>企业性质:<input name="enterNature" type="text"><hr></span>
-                    <span>企业注册资本:<input name="enterCapital" type="text"><hr></span>
-                    <span>法人:<input name="enterLperson" type="text"><hr></span>
-                    <span>法人身份证:<input name="enterLpCard" type="text"><hr></span>
-                    <span>地址:<input name="enterAddress" type="text"><hr></span>
-                    <span>邮政编码:<input name="emailCode" type="text"><hr></span>
-                    <span>备注:<input name="enterRemarks" type="text"><hr></span>
-                </div>
-                <div class="modal-footer">
-                    <!--                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭-->
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        提交更改
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<script>
-    $(function () {
-        $("#myTabContent a").click(function (e) {
-            $("#myTab li").tab('show');
-        })
-    });
-</script>
-
+<div class="pagination"></div>
 </body>
 </html>

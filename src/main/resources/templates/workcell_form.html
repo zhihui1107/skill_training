@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <meta charset="UTF-8">
+    <title>工位</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li><a th:href="@{/workcell}">工位列表</a></li>
+    <li class="active">
+        <a th:href="@{/form_workcell}" th:if="${workcell_id!=null}">工位修改</a>
+        <a th:href="@{/form_workcell}" th:if="${workcell_id==null}">工位添加</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <form method="post" action="/insert_workcell" class="layui-form">
+            <input name="id" type="hidden" th:value="${workcell_id}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">工位名称</label>
+                <div class="layui-input-inline">
+                    <input th:if="${workcell_id==null}" class="layui-input" name="cellName" type="text">
+                    <input th:if="${workcell_id!=null}" class="layui-input" name="cellName" type="text" th:value="${workCell.cellName}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属工站</label>
+                <div class="layui-input-inline">
+                    <select th:if="${workcell_id==null}" name="station_id">
+                        <option value=""></option>
+                        <span th:each="workStation:${workStationList}">
+                            <option th:value="${workStation.id}" th:text="${workStation.stationName}"></option>
+                        </span>
+                    </select>
+                    <select th:if="${workcell_id!=null}" name="station_id">
+                        <option th:value="${workCell.station_id}" th:text="${workStation.stationName}"></option>
+                        <span th:each="otherWorkStation:${otherWorkStationList}">
+                            <option th:value="${otherWorkStation.id}" th:text="${otherWorkStation.stationName}"></option>
+                        </span>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">工位编码</label>
+                <div class="layui-input-inline">
+                    <input th:if="${workcell_id==null}" class="layui-input" name="cellNumber" type="text">
+                    <input th:if="${workcell_id!=null}" class="layui-input" name="cellNumber" type="text" th:value="${workCell.cellNumber}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">工位负责人</label>
+                <div class="layui-input-inline">
+                    <input th:if="${workcell_id==null}" class="layui-input" name="cellMaster" type="text">
+                    <input th:if="${workcell_id!=null}" class="layui-input" name="cellMaster" type="text" th:value="${workCell.cellMaster}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">工位描述</label>
+                <div class="layui-input-inline">
+                    <input th:if="${workcell_id==null}" class="layui-input" name="cellDescription" type="text">
+                    <input th:if="${workcell_id!=null}" class="layui-input" name="cellDescription" type="text" th:value="${workCell.cellDescription}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    layui.use(['form'],function () {
+
+    });
+</script>
+</body>
+</html>
