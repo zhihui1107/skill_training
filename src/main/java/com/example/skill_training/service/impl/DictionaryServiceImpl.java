@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class DictionaryServiceImpl implements DictionaryService {
-<<<<<<< HEAD
     @Autowired
     DictionaryMapper dictionaryMapper;
     @Override
@@ -33,10 +32,6 @@ public class DictionaryServiceImpl implements DictionaryService {
         return dictionaryMapper.otherType(type, value);
     }
 
-=======
-@Autowired
-    DictionaryMapper dictionaryMapper;
-
     @Override
     public List<Dictionary> GetAllSpecBytype() {
         return dictionaryMapper.GetAllSpecBytype();
@@ -46,5 +41,5 @@ public class DictionaryServiceImpl implements DictionaryService {
     public List<Dictionary> GetAllTypeBytype() {
         return dictionaryMapper.GetAllTypeBytype();
     }
->>>>>>> origin/master
+
 }
