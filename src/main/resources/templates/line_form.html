@@ -22,48 +22,52 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade in active">
-        <form method="post" action="/insert_line" class="layui-form">
+        <form id="changeForm" method="post" action="/insert_line" class="layui-form">
             <input name="id" type="hidden" th:value="${line_id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">产线名称</label>
                 <div class="layui-input-inline">
-                    <input th:if="${line_id==null}" class="layui-input" name="lineName" type="text">
-                    <input th:if="${line_id!=null}" class="layui-input" name="lineName" type="text" th:value="${line.lineName}">
+                    <input th:if="${line_id==null}" class="layui-input" name="lineName" type="text" lay-verify="lineName">
+                    <input th:if="${line_id!=null}" class="layui-input" name="lineName" type="text" th:value="${line.lineName}" lay-verify="lineName">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">所属车间</label>
                 <div class="layui-input-inline">
-                    <select th:if="${line_id==null}" name="workshop_id">
+                    <select th:if="${line_id==null}" name="workshop_id" lay-verify="required">
                         <option value=""></option>
                         <span th:each="workShop:${workShopList}">
                             <option th:value="${workShop.id}" th:text="${workShop.shopName}"></option>
                         </span>
                     </select>
-                    <select th:if="${line_id!=null}" name="workshop_id">
+                    <select th:if="${line_id!=null}" name="workshop_id" lay-verify="required">
                         <option th:value="${line.workshop_id}" th:text="${workShop.shopName}"></option>
                         <span th:each="otherWorkShop:${otherWorkShopList}">
                             <option th:value="${otherWorkShop.id}" th:text="${otherWorkShop.shopName}"></option>
                         </span>
                     </select>
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">产线编码</label>
                 <div class="layui-input-inline">
-                    <input th:if="${line_id==null}" class="layui-input" name="lineNumber" type="text">
-                    <input th:if="${line_id!=null}" class="layui-input" name="lineNumber" type="text" th:value="${line.lineNumber}">
+                    <input th:if="${line_id==null}" class="layui-input" name="lineNumber" type="text" lay-verify="lineNumber">
+                    <input th:if="${line_id!=null}" class="layui-input" name="lineNumber" type="text" th:value="${line.lineNumber}" lay-verify="lineNumber">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">产线负责人</label>
                 <div class="layui-input-inline">
-                    <input th:if="${line_id==null}" class="layui-input" name="lineMaster" type="text">
-                    <input th:if="${line_id!=null}" class="layui-input" name="lineMaster" type="text" th:value="${line.lineMaster}">
+                    <input th:if="${line_id==null}" class="layui-input" name="lineMaster" type="text" lay-verify="lineMaster">
+                    <input th:if="${line_id!=null}" class="layui-input" name="lineMaster" type="text" th:value="${line.lineMaster}" lay-verify="lineMaster">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
@@ -76,7 +80,7 @@
             <hr />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -85,7 +89,27 @@
 </div>
 <script>
     layui.use(['form'],function () {
+        var form=layui.form
+            ,layer=layui.layer
+            ,$=layui.jquery;
 
+        form.verify({
+            lineName:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'产线名称请输入中文或者英文，长度2-20'],
+            lineNumber:[/^[A-Z0-9]{2}-?[0-9X]$/,'请输入正确的产线编码'],
+            lineMaster:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'产线负责人请输入中文或者英文，长度2-20']
+        });
+
+        form.on('submit(demo1)',function (data) {
+            layer.confirm('您确定要提交吗？',{
+                btn:['确认','取消']
+            }, function () {
+                $("#changeForm").submit();
+            }, function () {
+                layer.msg("已取消");
+                return false;
+            });
+            return false;
+        });
     });
 </script>
 </body>

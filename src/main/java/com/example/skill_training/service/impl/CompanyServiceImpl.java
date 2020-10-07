@@ -38,8 +38,8 @@ public class CompanyServiceImpl implements CompanyService {
         return true;
     }
     @Override
-    public boolean delete_Company(String enterName){
-        companyMapper.deleteCompany(enterName);
+    public boolean delete_Company(Company company){
+        companyMapper.deleteCompany(company);
         return true;
     }
 

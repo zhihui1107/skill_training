@@ -36,8 +36,12 @@ public class LineController {
             return "redirect:/line";
         }else {
             Line line=lineService.one_Line(select_name);
-            WorkShop workShop=workShopService.select_ById(line.getWorkshop_id());
-            line.setWorkshop_id(workShop.getShopName());
+            if(line==null){
+
+            }else {
+                WorkShop workShop=workShopService.select_ById(line.getWorkshop_id());
+                line.setWorkshop_id(workShop.getShopName());
+            }
             model.addAttribute("line",line);
             return "line_list";
         }
@@ -50,6 +54,7 @@ public class LineController {
         line.setLineMaster(lineMaster);
         line.setLineDescription(lineDescription);
         line.setWorkshop_id(workshop_id);
+        line.setDel_flag("0");
         Date date=new Date();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if(!id.equals("")){
@@ -59,13 +64,19 @@ public class LineController {
         }else {
             line.setId(UUID.randomUUID().toString().replaceAll("-",""));
             line.setCreate_date(dateFormat.format(date));
+            line.setUpdate_date(dateFormat.format(date));
             lineService.insert_Line(line);
         }
         return "redirect:/line";
     }
-    @GetMapping("/delete_line/{lineName}")
-    public String deleteOneLine(@PathVariable("lineName") String lineName){
-        lineService.delete_Line(lineName);
+    @GetMapping("/delete_line/{id}")
+    public String deleteOneLine(@PathVariable("id") String id){
+        Line line=lineService.select_ById(id);
+        line.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        line.setUpdate_date(dateFormat.format(date));
+        lineService.delete_Line(line);
         return "redirect:/line";
     }
     @GetMapping("/update_line/{id}")

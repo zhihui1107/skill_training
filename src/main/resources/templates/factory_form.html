@@ -22,26 +22,27 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade in active">
-        <form method="post" action="/insert_factory" class="layui-form">
+        <form id="changeForm" method="post" action="/insert_factory" class="layui-form">
             <input name="id" type="hidden" th:value="${factory_id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">工厂名称</label>
                 <div class="layui-input-inline">
-                    <input th:if="${factory_id==null}" class="layui-input" name="factoryName" type="text">
-                    <input th:if="${factory_id!=null}" class="layui-input" name="factoryName" type="text" th:value="${factory.factoryName}">
+                    <input th:if="${factory_id==null}" class="layui-input" name="factoryName" type="text" lay-verify="factoryName">
+                    <input th:if="${factory_id!=null}" class="layui-input" name="factoryName" type="text" th:value="${factory.factoryName}" lay-verify="factoryName">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">所属企业</label>
                 <div class="layui-input-inline">
-                    <select th:if="${factory_id==null}" name="enterprise_id">
+                    <select th:if="${factory_id==null}" name="enterprise_id" lay-verify="required">
                         <option value=""></option>
                         <span th:each="company:${companyList}">
                             <option th:value="${company.id}" th:text="${company.enterName}"></option>
                         </span>
                     </select>
-                    <select th:if="${factory_id!=null}" name="enterprise_id">
+                    <select th:if="${factory_id!=null}" name="enterprise_id" lay-verify="required">
                         <option value=""></option>
                         <option th:value="${factory.enterprise_id}" th:text="${company.enterName}" selected="selected"></option>
                         <span th:each="otherCompany:${otherCompanyList}">
@@ -49,30 +50,33 @@
                         </span>
                     </select>
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">建筑日期</label>
                 <div class="layui-input-inline">
-                    <input th:if="${factory_id==null}" class="layui-input" name="factoryBuildDate" type="text">
-                    <input th:if="${factory_id!=null}" class="layui-input" name="factoryBuildDate" type="text" th:value="${factory.factoryBuildDate}">
+                    <input th:if="${factory_id==null}" id="date" class="layui-input" name="factoryBuildDate" autocomplete="off">
+                    <input th:if="${factory_id!=null}" id="date1" class="layui-input" name="factoryBuildDate" th:value="${factory.factoryBuildDate}" autocomplete="off">
                 </div>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">地址</label>
                 <div class="layui-input-inline">
-                    <input th:if="${factory_id==null}" class="layui-input" name="factoryAddress" type="text">
-                    <input th:if="${factory_id!=null}" class="layui-input" name="factoryAddress" type="text" th:value="${factory.factoryAddress}">
+                    <input th:if="${factory_id==null}" class="layui-input" name="factoryAddress" type="text" lay-verify="factoryAddress">
+                    <input th:if="${factory_id!=null}" class="layui-input" name="factoryAddress" type="text" th:value="${factory.factoryAddress}" lay-verify="factoryAddress">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input th:if="${factory_id==null}" class="layui-input" name="factoryPhone" type="text">
-                    <input th:if="${factory_id!=null}" class="layui-input" name="factoryPhone" type="text" th:value="${factory.factoryPhone}">
+                    <input th:if="${factory_id==null}" class="layui-input" name="factoryPhone" type="text" lay-verify="required|phone">
+                    <input th:if="${factory_id!=null}" class="layui-input" name="factoryPhone" type="text" th:value="${factory.factoryPhone}" lay-verify="required|phone">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
@@ -93,7 +97,7 @@
             <hr />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -101,8 +105,35 @@
     </div>
 </div>
 <script>
-    layui.use(['form'],function () {
+    layui.use(['form','laydate'],function () {
+        var form=layui.form
+            ,laydate=layui.laydate
+            ,layer=layui.layer
+            ,$=layui.jquery;
 
+        laydate.render({
+            elem:'#date'
+        });
+        laydate.render({
+            elem:'#date1'
+        });
+
+        form.verify({
+            factoryName:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'工厂名称请输入中文或者英文，长度2-20'],
+            factoryAddress:[/^([\u4E00-\u9FA5A-Za-z0-9_]+(省|市|区|县|道|路|街|号)){2,}$/,'请输入正确的地址']
+        });
+
+        form.on('submit(demo1)',function (data) {
+            layer.confirm('您确定要提交吗？',{
+                btn:['确认','取消']
+            }, function () {
+                $("#changeForm").submit();
+            }, function () {
+                layer.msg("已取消");
+                return false;
+            });
+            return false;
+        });
     });
 </script>
 </body>

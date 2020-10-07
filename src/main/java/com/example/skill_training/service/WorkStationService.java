@@ -10,6 +10,6 @@ public interface WorkStationService {
     WorkStation select_ById(String id);
     List<WorkStation> other_WorkStation(String id);
     boolean insert_WorkStation(WorkStation workStation);
-    boolean delete_WorkStation(String stationName);
+    boolean delete_WorkStation(WorkStation workStation);
     boolean update_WorkStation(WorkStation workStation);
 }

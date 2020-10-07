@@ -47,6 +47,7 @@ public class CompanyController {
         company.setEnterAddress(enterAddress);
         company.setEmailCode(emailCode);
         company.setEnterRemarks(enterRemarks);
+        company.setDel_flag("0");
         Date date=new Date();//获取一个Date对象
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//创建格式化日期对象
         if(!id.equals("")){
@@ -56,19 +57,24 @@ public class CompanyController {
         }else {
             company.setCreate_date(dateFormat.format(date));//格式化后的时间
             company.setId(UUID.randomUUID().toString().replaceAll("-",""));
+            company.setUpdate_date(dateFormat.format(date));
             companyService.insert_Company(company);
         }
         return "redirect:/company";
     }
-    @GetMapping("/delete_company/{enterName}")
-    public String deleteOneCompany(@PathVariable("enterName") String enterName){
-        companyService.delete_Company(enterName);
+    @GetMapping("/delete_company/{id}")
+    public String deleteOneCompany(@PathVariable("id") String id){
+        Company company=companyService.select_ById(id);
+        company.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        company.setUpdate_date(dateFormat.format(date));
+        companyService.delete_Company(company);
         return "redirect:/company";
     }
     @GetMapping("/update_company/{id}")
     public String updateOneCompany(@PathVariable("id") String id,Model model){
         Company company=companyService.select_ById(id);
-
         model.addAttribute("company",company);
         model.addAttribute("own_id",id);
         return "company_form";

@@ -48,8 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean delete_Employee(String employeeNo) {
-        return employeeMapper.deleteEmployee(employeeNo);
+    public boolean delete_Employee(Employee employee) {
+        return employeeMapper.deleteEmployee(employee);
     }
 
     @Override

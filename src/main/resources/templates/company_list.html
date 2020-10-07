@@ -60,7 +60,7 @@
                 <td th:text="${company.enterRemarks}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_company/}+${company.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.enterName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.id}">删除</a>
                 </td>
             </tr>
             <tr th:each="company:${companyList}">
@@ -76,7 +76,7 @@
                 <td th:text="${company.enterRemarks}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_company/}+${company.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.enterName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.id}">删除</a>
                 </td>
             </tr>
             </tbody>

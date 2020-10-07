@@ -33,13 +33,18 @@ public class LineServiceImpl implements LineService {
     }
 
     @Override
+    public Line oneLineName(String lineNumber) {
+        return lineMapper.oneLineName(lineNumber);
+    }
+
+    @Override
     public boolean insert_Line(Line line) {
         return lineMapper.insertLine(line);
     }
 
     @Override
-    public boolean delete_Line(String lineName) {
-        return lineMapper.deleteLine(lineName);
+    public boolean delete_Line(Line line) {
+        return lineMapper.deleteLine(line);
     }
 
     @Override

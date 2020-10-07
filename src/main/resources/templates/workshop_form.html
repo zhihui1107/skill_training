@@ -22,26 +22,27 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade in active">
-        <form method="post" action="/insert_workshop" class="layui-form">
+        <form id="changeForm" method="post" action="/insert_workshop" class="layui-form">
             <input name="id" type="hidden" th:value="${workshop_id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">车间名称</label>
                 <div class="layui-input-inline">
-                    <input th:if="${workshop_id==null}" class="layui-input" name="shopName" type="text">
-                    <input th:if="${workshop_id!=null}" class="layui-input" name="shopName" type="text" th:value="${workShop.shopName}">
+                    <input th:if="${workshop_id==null}" class="layui-input" name="shopName" type="text" lay-verify="shopName">
+                    <input th:if="${workshop_id!=null}" class="layui-input" name="shopName" type="text" th:value="${workShop.shopName}" lay-verify="shopName">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">所属工厂</label>
                 <div class="layui-input-inline">
-                    <select th:if="${workshop_id==null}" name="factory_id">
+                    <select th:if="${workshop_id==null}" name="factory_id" lay-verify="required">
                         <option value=""></option>
                         <span th:each="factory:${factoryList}">
                             <option th:value="${factory.id}" th:text="${factory.factoryName}"></option>
                         </span>
                     </select>
-                    <select th:if="${workshop_id!=null}" name="factory_id">
+                    <select th:if="${workshop_id!=null}" name="factory_id" lay-verify="required">
                         <option value=""></option>
                         <option th:value="${workShop.factory_id}" th:text="${factory.factoryName}" selected="selected"></option>
                         <span th:each="otherFactory:${otherFactoryList}">
@@ -49,22 +50,25 @@
                         </span>
                     </select>
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">车间编码</label>
                 <div class="layui-input-inline">
-                    <input th:if="${workshop_id==null}" class="layui-input" name="shopNo" type="text">
-                    <input th:if="${workshop_id!=null}" class="layui-input" name="shopNo" type="text" th:value="${workShop.shopNo}">
+                    <input th:if="${workshop_id==null}" class="layui-input" name="shopNo" type="text" lay-verify="shopNo">
+                    <input th:if="${workshop_id!=null}" class="layui-input" name="shopNo" type="text" th:value="${workShop.shopNo}" lay-verify="shopNo">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">车间负责人</label>
                 <div class="layui-input-inline">
-                    <input th:if="${workshop_id==null}" class="layui-input" name="master" type="text">
-                    <input th:if="${workshop_id!=null}" class="layui-input" name="master" type="text" th:value="${workShop.master}">
+                    <input th:if="${workshop_id==null}" class="layui-input" name="master" type="text" lay-verify="master">
+                    <input th:if="${workshop_id!=null}" class="layui-input" name="master" type="text" th:value="${workShop.master}" lay-verify="master">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
@@ -77,7 +81,7 @@
             <hr />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -86,7 +90,27 @@
 </div>
 <script>
     layui.use(['form'],function () {
+        var form=layui.form
+            ,layer=layui.layer
+            ,$=layui.jquery;
 
+        form.verify({
+            shopName:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'车间名称请输入中文或者英文，长度2-20'],
+            shopNo:[/^[A-Z0-9]{2}-?[0-9X]$/,'请输入正确的车间编码'],
+            master:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'车间负责人请输入中文或者英文，长度2-20']
+        });
+
+        form.on('submit(demo1)',function (data) {
+            layer.confirm('您确定要提交吗？',{
+                btn:['确认','取消']
+            }, function () {
+                $("#changeForm").submit();
+            }, function () {
+                layer.msg("已取消");
+                return false;
+            });
+            return false;
+        });
     });
 </script>
 </body>

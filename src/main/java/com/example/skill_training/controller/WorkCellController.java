@@ -36,8 +36,12 @@ public class WorkCellController {
             return "redirect:/workcell";
         }else {
             WorkCell workCell=workCellService.one_WorkCell(select_name);
-            WorkStation workStation=workStationService.select_ById(workCell.getStation_id());
-            workCell.setStation_id(workStation.getStationName());
+            if(workCell==null){
+
+            }else {
+                WorkStation workStation=workStationService.select_ById(workCell.getStation_id());
+                workCell.setStation_id(workStation.getStationName());
+            }
             model.addAttribute("workCell",workCell);
             return "workcell_list";
         }
@@ -50,6 +54,7 @@ public class WorkCellController {
         workCell.setCellMaster(cellMaster);
         workCell.setCellDescription(cellDescription);
         workCell.setStation_id(station_id);
+        workCell.setDel_flag("0");
         Date date=new Date();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -60,13 +65,19 @@ public class WorkCellController {
         }else {
             workCell.setId(UUID.randomUUID().toString().replaceAll("-",""));
             workCell.setCreate_date(dateFormat.format(date));
+            workCell.setUpdate_date(dateFormat.format(date));
             workCellService.insert_WorkCell(workCell);
         }
         return "redirect:/workcell";
     }
-    @GetMapping("/delete_workcell/{cellName}")
-    public String deleteOneWorkCell(@PathVariable("cellName") String cellName){
-        workCellService.delete_WorkCell(cellName);
+    @GetMapping("/delete_workcell/{id}")
+    public String deleteOneWorkCell(@PathVariable("id") String id){
+        WorkCell workCell=workCellService.select_ById(id);
+        workCell.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        workCell.setUpdate_date(dateFormat.format(date));
+        workCellService.delete_WorkCell(workCell);
         return "redirect:/workcell";
     }
     @GetMapping("/update_workcell/{id}")

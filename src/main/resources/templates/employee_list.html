@@ -59,12 +59,12 @@
                 <td th:text="${employee.officeId}"></td>
                 <td th:text="${employee.sex}"></td>
                 <td th:text="${employee.age}"></td>
-                <td th:text="${employee.teNum}"></td>
+                <td th:text="${employee.telNum}"></td>
                 <td th:text="${employee.email}"></td>
                 <td th:text="${employee.address}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_employee/}+${employee.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_employee/}+${employee.employeeNo}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_employee/}+${employee.id}">删除</a>
                 </td>
             </tr>
             <tr th:each="employee:${employeeList}">
@@ -75,12 +75,12 @@
                 <td th:text="${employee.officeId}"></td>
                 <td th:text="${employee.sex}"></td>
                 <td th:text="${employee.age}"></td>
-                <td th:text="${employee.teNum}"></td>
+                <td th:text="${employee.telNum}"></td>
                 <td th:text="${employee.email}"></td>
                 <td th:text="${employee.address}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_employee/}+${employee.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_employee/}+${employee.employeeNo}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_employee/}+${employee.id}">删除</a>
                 </td>
             </tr>
             </tbody>

@@ -36,8 +36,12 @@ public class WorkShopController {
             return "redirect:/workshop";
         }else {
             WorkShop workShop=workShopService.one_WorkShop(select_name);
-            Factory factory=factoryService.select_ById(workShop.getFactory_id());
-            workShop.setFactory_id(factory.getFactoryName());
+            if(workShop==null){
+
+            }else {
+                Factory factory=factoryService.select_ById(workShop.getFactory_id());
+                workShop.setFactory_id(factory.getFactoryName());
+            }
             model.addAttribute("workShop",workShop);
             return "workshop_list";
         }
@@ -50,22 +54,29 @@ public class WorkShopController {
         workShop.setMaster(master);
         workShop.setDescription(description);
         workShop.setFactory_id(factory_id);
+        workShop.setDel_flag("0");
         Date date=new Date();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if(!id.equals("")){
             workShop.setId(id);
-            workShop.setUpdate_by(dateFormat.format(date));
+            workShop.setUpdate_date(dateFormat.format(date));
             workShopService.update_WorkShop(workShop);
         }else {
             workShop.setId(UUID.randomUUID().toString().replaceAll("-",""));
             workShop.setCreate_date(dateFormat.format(date));
+            workShop.setUpdate_date(dateFormat.format(date));
             workShopService.insert_WorkShop(workShop);
         }
         return "redirect:/workshop";
     }
-    @GetMapping("/delete_workshop/{shopName}")
-    public String deleteOneCompany(@PathVariable("shopName") String shopName){
-        workShopService.delete_WorkShop(shopName);
+    @GetMapping("/delete_workshop/{id}")
+    public String deleteOneCompany(@PathVariable("id") String id){
+        WorkShop workShop=workShopService.select_ById(id);
+        workShop.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        workShop.setUpdate_date(dateFormat.format(date));
+        workShopService.delete_WorkShop(workShop);
         return "redirect:/workshop";
     }
     @GetMapping("/update_workshop/{id}")

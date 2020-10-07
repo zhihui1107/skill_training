@@ -36,8 +36,12 @@ public class WorkStationController {
             return "redirect:/workstation";
         }else {
             WorkStation workStation=workStationService.one_WorkStation(select_name);
-            Line line=lineService.select_ById(workStation.getLine_id());
-            workStation.setLine_id(line.getLineName());
+            if(workStation==null){
+
+            }else {
+                Line line=lineService.select_ById(workStation.getLine_id());
+                workStation.setLine_id(line.getLineName());
+            }
             model.addAttribute("workStation",workStation);
             return "workstation_list";
         }
@@ -49,6 +53,7 @@ public class WorkStationController {
         workStation.setStationNo(stationNo);
         workStation.setStationMaster(stationMaster);
         workStation.setLine_id(line_id);
+        workStation.setDel_flag("0");
         Date date=new Date();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if(!id.equals("")){
@@ -58,13 +63,19 @@ public class WorkStationController {
         }else {
             workStation.setId(UUID.randomUUID().toString().replaceAll("-",""));
             workStation.setCreate_date(dateFormat.format(date));
+            workStation.setUpdate_date(dateFormat.format(date));
             workStationService.insert_WorkStation(workStation);
         }
         return "redirect:/workstation";
     }
-    @GetMapping("/delete_workstation/{stationName}")
-    public String deleteOneWorkStation(@PathVariable("stationName") String stationName){
-        workStationService.delete_WorkStation(stationName);
+    @GetMapping("/delete_workstation/{id}")
+    public String deleteOneWorkStation(@PathVariable("id") String id){
+        WorkStation workStation=workStationService.select_ById(id);
+        workStation.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        workStation.setUpdate_date(dateFormat.format(date));
+        workStationService.delete_WorkStation(workStation);
         return "redirect:/workstation";
     }
     @GetMapping("/update_workstation/{id}")

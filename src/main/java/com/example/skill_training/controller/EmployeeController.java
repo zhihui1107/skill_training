@@ -44,18 +44,20 @@ public class EmployeeController {
     }
     @RequestMapping(value = "/insert_employee",method = RequestMethod.POST)
     public String addEmployee(String id,String employeeNo,String employeeName,String workDate,String sex,String age,
-                             String teNum,String address,String email,String idCard,String officeId){
+                             String telNum,String address,String email,String idCard,String officeId,String remarks){
         Employee employee=new Employee();
         employee.setEmployeeNo(employeeNo);
         employee.setEmployeeName(employeeName);
         employee.setWorkDate(workDate);
         employee.setSex(sex);
         employee.setAge(age);
-        employee.setTeNum(teNum);
+        employee.setTelNum(telNum);
         employee.setAddress(address);
         employee.setEmail(email);
         employee.setIdCard(idCard);
         employee.setOfficeId(officeId);
+        employee.setDel_flag("0");
+        employee.setRemarks(remarks);
         Date date=new Date();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -66,13 +68,19 @@ public class EmployeeController {
         }else {
             employee.setId(UUID.randomUUID().toString().replaceAll("-",""));
             employee.setCreate_date(dateFormat.format(date));
+            employee.setUpdate_date(dateFormat.format(date));
             employeeService.insert_Employee(employee);
         }
         return "redirect:/employee";
     }
-    @GetMapping("/delete_employee/{employeeNo}")
-    public String deleteOneCompany(@PathVariable("employeeNo") String employeeNo){
-        employeeService.delete_Employee(employeeNo);
+    @GetMapping("/delete_employee/{id}")
+    public String deleteOneCompany(@PathVariable("id") String id){
+        Employee employee=employeeService.select_ById(id);
+        employee.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        employee.setUpdate_date(dateFormat.format(date));
+        employeeService.delete_Employee(employee);
         return "redirect:/employee";
     }
     @GetMapping("/update_employee/{id}")

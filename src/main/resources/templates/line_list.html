@@ -50,7 +50,7 @@
                 <td th:text="${line.lineDescription}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_line/}+${line.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_line/}+${line.lineName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_line/}+${line.id}">删除</a>
                 </td>
             </tr>
             <tr th:each="line:${lineList}">
@@ -61,7 +61,7 @@
                 <td th:text="${line.lineDescription}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_line/}+${line.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_line/}+${line.lineName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_line/}+${line.id}">删除</a>
                 </td>
             </tr>
             </tbody>

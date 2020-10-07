@@ -10,6 +10,6 @@ public interface FactoryService {
     Factory select_ById(String id);
     List<Factory> other_Factory(String id);
     boolean insert_Factory(Factory factory);
-    boolean delete_Factory(String factoryName);
+    boolean delete_Factory(Factory factory);
     boolean update_Factory(Factory factory);
 }

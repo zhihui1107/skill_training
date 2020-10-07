@@ -10,6 +10,6 @@ public interface WorkShopService {
     WorkShop select_ById(String id);
     List<WorkShop> other_WorkShop(String id);
     boolean insert_WorkShop(WorkShop workShop);
-    boolean delete_WorkShop(String shopName);
+    boolean delete_WorkShop(WorkShop workShop);
     boolean update_WorkShop(WorkShop workShop);
 }

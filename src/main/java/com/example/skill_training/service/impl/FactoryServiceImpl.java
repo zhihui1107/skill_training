@@ -38,8 +38,8 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public boolean delete_Factory(String factoryName) {
-        return factoryMapper.deleteFactory(factoryName);
+    public boolean delete_Factory(Factory factory) {
+        return factoryMapper.deleteFactory(factory);
     }
 
     @Override

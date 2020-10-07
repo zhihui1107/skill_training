@@ -11,6 +11,6 @@ public interface CellEmployeeService {
     CellEmployee one_CellEmployee(String employeeName,String cellName);
     CellEmployee select_ById(String id);
     boolean insert_CellEmployee(CellEmployee cellEmployee);
-    boolean delete_CellEmployee(String employee_id);
+    boolean delete_CellEmployee(CellEmployee cellEmployee);
     boolean update_CellEmployee(CellEmployee cellEmployee);
 }

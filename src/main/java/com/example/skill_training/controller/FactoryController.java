@@ -33,8 +33,12 @@ public class FactoryController {
             return "redirect:/factory";
         }else {
             Factory factory=factoryService.one_Factory(select_name);
-            Company company=companyService.select_ById(factory.getEnterprise_id());
-            factory.setEnterprise_id(company.getEnterName());
+            if(factory==null){
+
+            }else {
+                Company company=companyService.select_ById(factory.getEnterprise_id());
+                factory.setEnterprise_id(company.getEnterName());
+            }
             model.addAttribute("factory",factory);
             return "factory_list";
         }
@@ -50,6 +54,7 @@ public class FactoryController {
         factory.setFactoryECode(factoryECode);
         factory.setFactoryBuildM(factoryBuildM);
         factory.setEnterprise_id(enterprise_id);
+        factory.setDel_flag("0");
         Date date=new Date();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if(!id.equals("")){
@@ -59,13 +64,19 @@ public class FactoryController {
         }else {
             factory.setId(UUID.randomUUID().toString().replaceAll("-",""));
             factory.setCreate_date(dateFormat.format(date));
+            factory.setUpdate_date(dateFormat.format(date));
             factoryService.insert_Factory(factory);
         }
         return "redirect:/factory";
     }
-    @GetMapping("/delete_factory/{factoryName}")
-    public String deleteOneFactory(@PathVariable("factoryName") String factoryName){
-        factoryService.delete_Factory(factoryName);
+    @GetMapping("/delete_factory/{id}")
+    public String deleteOneFactory(@PathVariable("id") String id){
+        Factory factory=factoryService.select_ById(id);
+        factory.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        factory.setUpdate_date(dateFormat.format(date));
+        factoryService.delete_Factory(factory);
         return "redirect:/factory";
     }
     @GetMapping("/update_factory/{id}")

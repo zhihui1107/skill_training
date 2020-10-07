@@ -7,7 +7,7 @@ public class Employee {
     private String workDate;
     private String sex;
     private String age;
-    private String teNum;
+    private String telNum;
     private String address;
     private String email;
     private String idCard;
@@ -67,12 +67,12 @@ public class Employee {
         this.age = age;
     }
 
-    public String getTeNum() {
-        return teNum;
+    public String getTelNum() {
+        return telNum;
     }
 
-    public void setTeNum(String teNum) {
-        this.teNum = teNum;
+    public void setTelNum(String telNum) {
+        this.telNum = telNum;
     }
 
     public String getAddress() {

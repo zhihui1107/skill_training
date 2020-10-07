@@ -43,8 +43,8 @@ public class CellEmployeeServiceImpl implements CellEmployeeService {
     }
 
     @Override
-    public boolean delete_CellEmployee(String employee_id) {
-        return cellEmployeeMapper.deleteCellEmployee(employee_id);
+    public boolean delete_CellEmployee(CellEmployee cellEmployee) {
+        return cellEmployeeMapper.deleteCellEmployee(cellEmployee);
     }
 
     @Override

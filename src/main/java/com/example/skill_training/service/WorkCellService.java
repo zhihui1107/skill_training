@@ -10,6 +10,6 @@ public interface WorkCellService {
     WorkCell select_ById(String id);
     List<WorkCell> other_Cell(String id);
     boolean insert_WorkCell(WorkCell workShop);
-    boolean delete_WorkCell(String cellName);
+    boolean delete_WorkCell(WorkCell workShop);
     boolean update_WorkCell(WorkCell workShop);
 }

@@ -54,7 +54,7 @@
                 <td th:text="${factory.factoryBuildM}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_factory/}+${factory.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_factory/}+${factory.factoryName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_factory/}+${factory.id}">删除</a>
                 </td>
             </tr>
             <tr th:each="factory:${factoryList}">
@@ -67,7 +67,7 @@
                 <td th:text="${factory.factoryBuildM}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_factory/}+${factory.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_factory/}+${factory.factoryName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_factory/}+${factory.id}">删除</a>
                 </td>
             </tr>
             </tbody>

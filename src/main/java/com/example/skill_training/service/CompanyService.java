@@ -10,6 +10,6 @@ public interface CompanyService {
     Company select_ById(String id);
     List<Company> other_Company(String id);
     boolean insert_Company(Company company);
-    boolean delete_Company(String enterName);
+    boolean delete_Company(Company company);
     boolean update_Company(Company company);
 }

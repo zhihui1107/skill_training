@@ -50,7 +50,7 @@
                 <td th:text="${workShop.description}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_workshop/}+${workShop.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workshop/}+${workShop.shopName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workshop/}+${workShop.id}">删除</a>
                 </td>
             </tr>
             <tr th:each="workshop:${workShopList}">
@@ -61,7 +61,7 @@
                 <td th:text="${workshop.description}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_workshop/}+${workshop.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workshop/}+${workshop.shopName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workshop/}+${workshop.id}">删除</a>
                 </td>
             </tr>
             </tbody>
@@ -69,6 +69,5 @@
     </div>
 </div>
 <div class="pagination"></div>
-
 </body>
 </html>

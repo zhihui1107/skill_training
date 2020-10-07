@@ -22,38 +22,42 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade in active">
-        <form method="post" action="/insert_employee" class="layui-form">
+        <form id="changeForm" method="post" action="/insert_employee" class="layui-form">
             <input name="id" type="hidden" th:value="${employee_id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">员工号</label>
                 <div class="layui-input-inline">
-                    <input th:if="${employee_id==null}" class="layui-input" name="employeeNo" type="text">
-                    <input th:if="${employee_id!=null}" class="layui-input" name="employeeNo" type="text" th:value="${employee.employeeNo}">
+                    <input th:if="${employee_id==null}" class="layui-input" name="employeeNo" type="text" lay-verify="employeeNo">
+                    <input th:if="${employee_id!=null}" class="layui-input" name="employeeNo" type="text" th:value="${employee.employeeNo}" lay-verify="employeeNo">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">员工姓名</label>
                 <div class="layui-input-inline">
-                    <input th:if="${employee_id==null}" class="layui-input" name="employeeName" type="text">
-                    <input th:if="${employee_id!=null}" class="layui-input" name="employeeName" type="text" th:value="${employee.employeeName}">
+                    <input th:if="${employee_id==null}" class="layui-input" name="employeeName" type="text" lay-verify="employeeName">
+                    <input th:if="${employee_id!=null}" class="layui-input" name="employeeName" type="text" th:value="${employee.employeeName}" lay-verify="employeeName">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">入职日期</label>
                 <div class="layui-input-inline">
-                    <input th:if="${employee_id==null}" class="layui-input" name="workDate" type="text">
-                    <input th:if="${employee_id!=null}" class="layui-input" name="workDate" type="text" th:value="${employee.workDate}">
+                    <input th:if="${employee_id==null}" id="date" class="layui-input" name="workDate" lay-verify="required" autocomplete="off">
+                    <input th:if="${employee_id!=null}" id="date1" class="layui-input" name="workDate" th:value="${employee.workDate}" lay-verify="required" autocomplete="off">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">身份证号</label>
                 <div class="layui-input-inline">
-                    <input th:if="${employee_id==null}" class="layui-input" name="idCard" type="text">
-                    <input th:if="${employee_id!=null}" class="layui-input" name="idCard" type="text" th:value="${employee.idCard}">
+                    <input th:if="${employee_id==null}" class="layui-input" name="idCard" type="text" lay-verify="required|identity">
+                    <input th:if="${employee_id!=null}" class="layui-input" name="idCard" type="text" th:value="${employee.idCard}" lay-verify="required|identity">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
@@ -68,7 +72,7 @@
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-block">
                     <span th:if="${employee_id==null}">
-                        <input type="radio" name="sex" value="男" title="男">
+                        <input type="radio" name="sex" value="男" title="男" checked="">
                         <input type="radio" name="sex" value="女" title="女">
                     </span>
                     <span th:if="${employee_id!=null}">
@@ -89,25 +93,28 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
-                    <input th:if="${employee_id==null}" class="layui-input" name="age" type="text">
-                    <input th:if="${employee_id!=null}" class="layui-input" name="age" type="text" th:value="${employee.age}">
+                    <input th:if="${employee_id==null}" class="layui-input" name="age" type="text" lay-verify="age">
+                    <input th:if="${employee_id!=null}" class="layui-input" name="age" type="text" th:value="${employee.age}" lay-verify="age">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input th:if="${employee_id==null}" class="layui-input" name="teNum" type="text">
-                    <input th:if="${employee_id!=null}" class="layui-input" name="teNum" type="text" th:value="${employee.teNum}">
+                    <input th:if="${employee_id==null}" class="layui-input" name="telNum" type="text" lay-verify="required|phone">
+                    <input th:if="${employee_id!=null}" class="layui-input" name="telNum" type="text" th:value="${employee.telNum}" lay-verify="required|phone">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-inline">
-                    <input th:if="${employee_id==null}" class="layui-input" name="email" type="text">
-                    <input th:if="${employee_id!=null}" class="layui-input" name="email" type="text" th:value="${employee.email}">
+                    <input th:if="${employee_id==null}" class="layui-input" name="email" type="text" lay-verify="email">
+                    <input th:if="${employee_id!=null}" class="layui-input" name="email" type="text" th:value="${employee.email}" lay-verify="email">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
@@ -119,8 +126,16 @@
             </div>
             <hr />
             <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    <input th:if="${employee_id==null}" class="layui-input" name="remarks" type="text" lay-verify="required">
+                    <input th:if="${employee_id!=null}" class="layui-input" name="remarks" type="text" lay-verify="required" th:value="${employee.remarks}">
+                </div>
+                <span style="color: red">*</span>
+            </div>
+            <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -128,8 +143,36 @@
     </div>
 </div>
 <script>
-    layui.use(['form'],function () {
+    layui.use(['form','laydate'],function () {
+        var form=layui.form
+            ,laydate=layui.laydate
+            ,layer=layui.layer
+            ,$=layui.jquery;
 
+        laydate.render({
+            elem:'#date'
+        });
+        laydate.render({
+            elem:'#date1'
+        });
+
+        form.verify({
+            employeeName:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'员工姓名请输入中文或者英文，长度2-20'],
+            age:[/^(1[89]|[2-5][0-9]|60)$/,'请输入正确的年龄'],
+            employeeNo:[/^\d{10}$/,'员工号请输入10位数字']
+        });
+
+        form.on('submit(demo1)',function (data) {
+            layer.confirm('您确定要提交吗？',{
+                btn:['确认','取消']
+            }, function () {
+                $("#changeForm").submit();
+            }, function () {
+                layer.msg("已取消");
+                return false;
+            });
+            return false;
+        });
     });
 </script>
 </body>

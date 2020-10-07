@@ -22,34 +22,35 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade in active">
-        <form method="post" action="/insert_cellemployee" class="layui-form">
+        <form id="changeForm" method="post" action="/insert_cellemployee" class="layui-form">
             <input name="id" type="hidden" th:value="${cellemployee_id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">员工名称</label>
                 <div class="layui-input-inline">
-                    <select th:if="${cellemployee_id==null}" name="employee_id">
+                    <select th:if="${cellemployee_id==null}" name="employee_id" lay-verify="required">
                         <option value=""></option>
                         <span th:each="employee:${employeeList}">
                             <option th:value="${employee.id}" th:text="${employee.employeeName}"></option>
                         </span>
                     </select>
-                    <select th:if="${cellemployee_id!=null}" name="employee_id">
+                    <select th:if="${cellemployee_id!=null}" name="employee_id" lay-verify="required">
                         <option value=""></option>
                         <option th:value="${cellEmployee.employee_id}" th:text="${employee.employeeName}" selected=""></option>
                     </select>
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">所属工位</label>
                 <div class="layui-input-inline">
-                    <select th:if="${cellemployee_id==null}" name="cell_id">
+                    <select th:if="${cellemployee_id==null}" name="cell_id" lay-verify="required">
                         <option value=""></option>
                         <span th:each="workCell:${workCellList}">
                             <option th:value="${workCell.id}" th:text="${workCell.cellName}"></option>
                         </span>
                     </select>
-                    <select th:if="${cellemployee_id!=null}" name="cell_id">
+                    <select th:if="${cellemployee_id!=null}" name="cell_id" lay-verify="required">
                         <option value=""></option>
                         <option th:value="${cellEmployee.cell_id}" th:text="${workCell.cellName}" selected=""></option>
                         <span th:each="otherWorkCell:${otherWorkCellList}">
@@ -57,11 +58,12 @@
                         </span>
                     </select>
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -70,7 +72,21 @@
 </div>
 <script>
     layui.use(['form'],function () {
+        var form=layui.form
+            ,layer=layui.layer
+            ,$=layui.jquery;
 
+        form.on('submit(demo1)',function (data) {
+            layer.confirm('您确定要提交吗？',{
+                btn:['确认','取消']
+            }, function () {
+                $("#changeForm").submit();
+            }, function () {
+                layer.msg("已取消");
+                return false;
+            });
+            return false;
+        });
     });
 </script>
 </body>

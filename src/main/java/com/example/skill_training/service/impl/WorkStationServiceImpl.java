@@ -38,8 +38,8 @@ public class WorkStationServiceImpl implements WorkStationService {
     }
 
     @Override
-    public boolean delete_WorkStation(String stationName) {
-        return workStationMapper.deleteWorkStation(stationName);
+    public boolean delete_WorkStation(WorkStation workStation) {
+        return workStationMapper.deleteWorkStation(workStation);
     }
 
     @Override

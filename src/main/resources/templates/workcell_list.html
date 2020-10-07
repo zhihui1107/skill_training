@@ -50,7 +50,7 @@
                 <td th:text="${workCell.cellDescription}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_workcell/}+${workCell.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workcell/}+${workCell.cellName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workcell/}+${workCell.id}">删除</a>
                 </td>
             </tr>
             <tr th:each="workcell:${workCellList}">
@@ -61,7 +61,7 @@
                 <td th:text="${workcell.cellDescription}"></td>
                 <td>
                     <a class="layui-btn layui-btn-xs" th:href="@{/update_workcell/}+${workcell.id}">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workcell/}+${workcell.cellName}">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_workcell/}+${workcell.id}">删除</a>
                 </td>
             </tr>
             </tbody>

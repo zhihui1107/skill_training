@@ -38,8 +38,8 @@ public class WorkShopServiceImpl implements WorkShopService {
     }
 
     @Override
-    public boolean delete_WorkShop(String shopName) {
-        return workShopMapper.deleteWorkShop(shopName);
+    public boolean delete_WorkShop(WorkShop workShop) {
+        return workShopMapper.deleteWorkShop(workShop);
     }
 
     @Override

@@ -56,6 +56,7 @@ public class CellEmployeeController {
         CellEmployee cellEmployee=new CellEmployee();
         cellEmployee.setEmployee_id(employee_id);
         cellEmployee.setCell_id(cell_id);
+        cellEmployee.setDel_flag("0");
         Date date=new Date();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -66,13 +67,19 @@ public class CellEmployeeController {
         }else {
             cellEmployee.setId(UUID.randomUUID().toString().replaceAll("-",""));
             cellEmployee.setCreate_date(dateFormat.format(date));
+            cellEmployee.setUpdate_date(dateFormat.format(date));
             cellEmployeeService.insert_CellEmployee(cellEmployee);
         }
         return "redirect:/cellemployee";
     }
-    @GetMapping("/delete_cellemployee/{employee_id}")
-    public String deleteOneCompany(@PathVariable("employee_id") String employee_id){
-        cellEmployeeService.delete_CellEmployee(employee_id);
+    @GetMapping("/delete_cellemployee/{id}")
+    public String deleteOneCompany(@PathVariable("id") String id){
+        CellEmployee cellEmployee=cellEmployeeService.select_ById(id);
+        cellEmployee.setDel_flag("1");
+        Date date=new Date();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        cellEmployee.setUpdate_date(dateFormat.format(date));
+        cellEmployeeService.delete_CellEmployee(cellEmployee);
         return "redirect:/cellemployee";
     }
     @GetMapping("/update_cellemployee/{id}")

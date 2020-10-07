@@ -22,53 +22,57 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade in active">
-        <form method="post" action="/insert_workstation" class="layui-form">
+        <form id="changeForm" method="post" action="/insert_workstation" class="layui-form">
             <input name="id" type="hidden" th:value="${workstation_id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">工站名称</label>
                 <div class="layui-input-inline">
-                    <input th:if="${workstation_id==null}" class="layui-input" name="stationName" type="text">
-                    <input th:if="${workstation_id!=null}" class="layui-input" name="stationName" type="text" th:value="${workStation.stationName}">
+                    <input th:if="${workstation_id==null}" class="layui-input" name="stationName" type="text" lay-verify="stationName">
+                    <input th:if="${workstation_id!=null}" class="layui-input" name="stationName" type="text" th:value="${workStation.stationName}" lay-verify="stationName">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">所属产线</label>
                 <div class="layui-input-inline">
-                    <select th:if="${workstation_id==null}" name="line_id">
+                    <select th:if="${workstation_id==null}" name="line_id" lay-verify="required">
                         <option value=""></option>
                         <span th:each="line:${lineList}">
                             <option th:value="${line.id}" th:text="${line.lineName}"></option>
                         </span>
                     </select>
-                    <select th:if="${workstation_id!=null}" name="line_id">
+                    <select th:if="${workstation_id!=null}" name="line_id" lay-verify="required">
                         <option th:value="${workStation.line_id}" th:text="${line.lineName}"></option>
                         <span th:each="otherLine:${otherLineList}">
                             <option th:value="${otherLine.id}" th:text="${otherLine.lineName}"></option>
                         </span>
                     </select>
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">工站编码</label>
                 <div class="layui-input-inline">
-                    <input th:if="${workstation_id==null}" class="layui-input" name="stationNo" type="text">
-                    <input th:if="${workstation_id!=null}" class="layui-input" name="stationNo" type="text" th:value="${workStation.stationNo}">
+                    <input th:if="${workstation_id==null}" class="layui-input" name="stationNo" type="text" lay-verify="stationNo">
+                    <input th:if="${workstation_id!=null}" class="layui-input" name="stationNo" type="text" th:value="${workStation.stationNo}" lay-verify="stationNo">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <label class="layui-form-label">工站负责人</label>
                 <div class="layui-input-inline">
-                    <input th:if="${workstation_id==null}" class="layui-input" name="stationMaster" type="text">
-                    <input th:if="${workstation_id!=null}" class="layui-input" name="stationMaster" type="text" th:value="${workStation.stationMaster}">
+                    <input th:if="${workstation_id==null}" class="layui-input" name="stationMaster" type="text" lay-verify="stationMaster">
+                    <input th:if="${workstation_id!=null}" class="layui-input" name="stationMaster" type="text" th:value="${workStation.stationMaster}" lay-verify="stationMaster">
                 </div>
+                <span style="color: red">*</span>
             </div>
             <hr />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -77,7 +81,27 @@
 </div>
 <script>
     layui.use(['form'],function () {
+        var form=layui.form
+            ,layer=layui.layer
+            ,$=layui.jquery;
 
+        form.verify({
+            stationName:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'工站名称请输入中文或者英文，长度2-20'],
+            stationNo:[/^[A-Z0-9]{2}-?[0-9X]$/,'请输入正确的工站编码'],
+            stationMaster:[/^[\u4e00-\u9fa5A-Za-z]{2,20}$/,'工站负责人请输入中文或者英文，长度2-20']
+        });
+
+        form.on('submit(demo1)',function (data) {
+            layer.confirm('您确定要提交吗？',{
+                btn:['确认','取消']
+            }, function () {
+                $("#changeForm").submit();
+            }, function () {
+                layer.msg("已取消");
+                return false;
+            });
+            return false;
+        });
     });
 </script>
 </body>

@@ -38,8 +38,8 @@ public class WorkCellServiceImpl implements WorkCellService {
     }
 
     @Override
-    public boolean delete_WorkCell(String cellName) {
-        return workCellMapper.deleteWorkCell(cellName);
+    public boolean delete_WorkCell(WorkCell workShop) {
+        return workCellMapper.deleteWorkCell(workShop);
     }
 
     @Override

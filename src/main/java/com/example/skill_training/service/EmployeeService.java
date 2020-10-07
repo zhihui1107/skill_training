@@ -12,6 +12,6 @@ public interface EmployeeService {
     Employee one_Employee(String employeeNo,String employeeName);
     Employee select_ById(String id);
     boolean insert_Employee(Employee employee);
-    boolean delete_Employee(String employeeNo);
+    boolean delete_Employee(Employee employee);
     boolean update_Employee(Employee employee);
 }
