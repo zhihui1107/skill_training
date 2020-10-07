@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+
+    <title>Title</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li><a th:href="@{/Codeprinters}">设备列表</a></li>
+    <li class="active">
+        <a th:href="@{/Codeprinter_form}" th:if="${own_qrCode!=null}">设备修改</a>
+        <a th:href="@{/Codeprinter_form}" th:if="${own_qrCode==null}">设备添加</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <form method="post" id="changeForm" action="/AddCodeprinter" class="layui-form">
+            <input name="qrCode" type="hidden" th:value="${own_qrCode}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">设备编码</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="id" type="text" lay-verify="required">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="id" type="text" th:value="${Codeprinter.id}" lay-verify="required">
+                </div>
+                <span style="color: red">*</span>
+            </div>
+            <hr />
+            <span class="layui-form-label">设备类型</span>
+            <div class="layui-inline layui-form-item">
+                <div class="layui-input-inline">
+                    <select th:if="${own_qrCode==null}" name="type" lay-verify="required">
+                        <option value=""></option>
+                        <span th:each="Type:${Types}">
+                            <option th:text="${Type.label}" th:value="${Type.label}"></option>
+                        </span>
+                    </select>
+                    <select th:if="${own_qrCode!=null}" name="type" lay-verify="required">
+                        <option value=""></option>
+                        <option th:text="${Codeprinter.type}" th:value="${Codeprinter.type}" selected="selected"></option>
+                        <span th:each="Type:${Types}">
+                            <option th:text="${Type.label}" th:value="${Type.label}"></option>
+                        </span>
+                    </select>
+                </div>
+                <span style="color: red">*</span>
+            </div>
+            <hr />
+            <span class="layui-form-label">设备规格</span>
+            <div class="layui-inline layui-form-item">
+                <div class="layui-input-inline">
+                    <select th:if="${own_qrCode==null}" name="spec" lay-verify="required">
+                        <option value=""></option>
+                        <span th:each="Spec:${Specs}">
+                            <option th:text="${Spec.label}" th:value="${Spec.label}"></option>
+                        </span>
+                    </select>
+                    <select th:if="${own_qrCode!=null}" name="spec" lay-verify="required">
+                        <option value=""></option>
+                        <option th:text="${Codeprinter.spec}" th:value="${Codeprinter.spec}" selected="selected"></option>
+                        <span th:each="Spec:${Specs}">
+                            <option th:text="${Spec.label}" th:value="${Spec.label}"></option>
+                        </span>
+                    </select>
+                </div>
+                <span style="color: red">*</span>
+            </div>
+            <hr />
+            <span  class="layui-form-label">所属工位</span>
+            <div class="layui-inline layui-form-item">
+                <div class="layui-input-inline">
+                    <select th:if="${own_qrCode!=null}" name="cell">
+                        <option value=""></option>
+                        <option th:text="${Codeprinter.cellName}" th:value="${Codeprinter.cell_id}" selected="selected"></option>
+                        <span th:each="CellName:${CellNames}">
+                            <option th:text="${CellName.cellName}" th:value="${CellName.id}"></option>
+                       </span>
+                    </select>
+                    <select th:if="${own_qrCode==null}" name="cell">
+                        <option value=""></option>
+                        <span th:each="CellName:${CellNames}">
+                            <option th:text="${CellName.cellName}" th:value="${CellName.id}"></option>
+                       </span>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <span class="layui-form-label">所属工站</span>
+            <div class="layui-inline layui-form-item">
+                <div class="layui-input-inline">
+                    <select th:if="${own_qrCode!=null}" name="station">
+                        <option value=""></option>
+                        <option th:text="${Codeprinter.stationName}" th:value="${Codeprinter.station_id}" selected="selected"></option>
+                        <span th:each="StationName:${StationNames}">
+                            <option th:text="${StationName.stationName}" th:value="${StationName.id}"></option>
+                        </span>
+                    </select>
+                    <select th:if="${own_qrCode==null}" name="station">
+                        <option value=""></option>
+                        <span th:each="StationName:${StationNames}">
+                            <option th:text="${StationName.stationName}" th:value="${StationName.id}"></option>
+                        </span>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">打印编号</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="cPNumber" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="cPNumber" type="text" th:value="${Codeprinter.cPNumber}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">打印模式</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="mode" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="mode" type="text" th:value="${Codeprinter.mode}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">分辨率</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="resolution" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="resolution" type="text" th:value="${Codeprinter.resolution}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">供应商</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="supplier" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="supplier" type="text" th:value="${Codeprinter.supplier}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">生产商</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="manufacturer" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="manufacturer" type="text" th:value="${Codeprinter.manufacturer}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">出厂编号</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="factoryNumber" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="factoryNumber" type="text" th:value="${Codeprinter.factoryNumber}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-inline">
+                <label class="layui-form-label">采购日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="buyDate" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">用途</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="purpose" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="purpose" type="text" th:value="${Codeprinter.purpose}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">资产负责人</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="person" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="person" type="text" th:value="${Codeprinter.person}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">所有权部门</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="organization" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="organization" type="text" th:value="${Codeprinter.organization}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_qrCode==null}" class="layui-input" name="remarks" type="text">
+                    <input th:if="${own_qrCode!=null}" class="layui-input" name="remarks" type="text" th:value="${Codeprinter.remarks}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-filter="demo" lay-submit="">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'laydate'],function () {
+        var form=layui.form
+            ,laydate = layui.laydate
+            ,layer=layui.layer;
+
+        laydate.render({
+            elem: '#date'
+        });
+
+
+        form.on('submit(demo)',function (data) {
+            layer.confirm('您确定要提交吗？',{
+                btn:['确认','取消']
+            }, function () {
+                $("#changeForm").submit();
+            }, function () {
+                layer.msg("已取消");
+                return false;
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

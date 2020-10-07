@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+</head>
+<body>
+<div>
+    <form method="post" action="/SearchElectronsteelyard" class="layui-form">
+        <span>设备类型：</span>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <select name="search_type">
+                    <option value=""></option>
+                    <option value="PAD">PAD</option>
+                    <option value="读卡器">读卡器</option>
+                    <option value="电子秤">电子秤</option>
+                    <option value="扫码枪">扫码枪</option>
+                    <option value="打印机">打印机</option>
+                </select>
+            </div>
+        </div>
+        <span>设备规格：</span>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <select name="search_spec">
+                    <option value=""></option>
+                    <option value="重量">重量</option>
+                    <option value="体积">体积</option>
+                    <option value="长度">长度</option>
+                </select>
+            </div>
+        </div>
+        <span>编码</span>
+        <div class="layui-inline">
+            <input class="layui-input" name="search_id" type="text" value="">
+        </div>
+        <span><button type="submit" class="layui-btn">查询</button></span>
+    </form>
+</div>
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="" data-toggle="tab">
+            设备列表
+        </a>
+    </li>
+    <li><a th:href="@{/Electronsteelyard_form}">设备添加</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <td>编号</td>
+                <td>设备类型</td>
+                <td>设备规格</td>
+                <td>所属工站</td>
+                <td>所属工位</td>
+                <td>名称</td>
+                <td>称重范围</td>
+                <td>重量</td>
+                <td>供应商</td>
+                <td>生产商</td>
+                <td>出厂编号</td>
+                <td>用途</td>
+                <td>采购日期</td>
+                <td>资产负责人</td>
+                <td>所有权部门</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="electronsteelyard:${electronsteelyards}">
+                <td th:text="${electronsteelyard.id}"></td>
+                <td th:text="${electronsteelyard.type}"></td>
+                <td th:text="${electronsteelyard.spec}"></td>
+                <td th:text="${electronsteelyard.stationName}"></td>
+                <td th:text="${electronsteelyard.cellName}"></td>
+                <td th:text="${electronsteelyard.eSName}"></td>
+                <td th:text="${electronsteelyard.eSRange}"></td>
+                <td th:text="${electronsteelyard.eSWeight}"></td>
+                <td th:text="${electronsteelyard.supplier}"></td>
+                <td th:text="${electronsteelyard.manufacturer}"></td>
+                <td th:text="${electronsteelyard.factoryNumber}"></td>
+                <td th:text="${electronsteelyard.purpose}"></td>
+                <td th:text="${electronsteelyard.buyDate}"></td>
+                <td th:text="${electronsteelyard.person}"></td>
+                <td th:text="${electronsteelyard.organization}"></td>
+                <td class="caozuo">
+                    <a class="layui-btn layui-btn-xs" th:href="@{/updateElectronsteelyard/}+${electronsteelyard.qrCode}">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/deleteElectronsteelyard/}+${electronsteelyard.id}">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    layui.use(['form'],function () {
+
+    });
+</script>
+</body>
+</html>

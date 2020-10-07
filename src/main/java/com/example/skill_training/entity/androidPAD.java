@@ -2,6 +2,7 @@ package com.example.skill_training.entity;
 
 public class androidPAD {
     private String id;
+    private String label;
     private String qrCode;
     private String type;
     private String spec;
@@ -25,6 +26,8 @@ public class androidPAD {
     private String capacity;
     private String cell_id;
     private String station_id;
+    private String cellName;
+    private String stationName;
     private String del_flag;
     private String remarks;
     private String create_by;
@@ -32,9 +35,52 @@ public class androidPAD {
     private String update_by;
     private String update_date;
 
+    @Override
+    public String toString() {
+        return "androidPAD{" +
+                "id='" + id + '\'' +
+                ", qrCode='" + qrCode + '\'' +
+                ", type='" + type + '\'' +
+                ", spec='" + spec + '\'' +
+                ", supplier='" + supplier + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", factoryNumber='" + factoryNumber + '\'' +
+                ", purpose='" + purpose + '\'' +
+                ", buyDate='" + buyDate + '\'' +
+                ", person='" + person + '\'' +
+                ", organization='" + organization + '\'' +
+                ", ip='" + ip + '\'' +
+                ", comBaudrate='" + comBaudrate + '\'' +
+                ", comDataseat='" + comDataseat + '\'' +
+                ", comBegin='" + comBegin + '\'' +
+                ", comEnd='" + comEnd + '\'' +
+                ", checkMode='" + checkMode + '\'' +
+                ", sysParam='" + sysParam + '\'' +
+                ", pADsc='" + pADsc + '\'' +
+                ", pADNucleus='" + pADNucleus + '\'' +
+                ", pADMemory='" + pADMemory + '\'' +
+                ", capacity='" + capacity + '\'' +
+                ", cell_id='" + cell_id + '\'' +
+                ", station_id='" + station_id + '\'' +
+                ", del_flag='" + del_flag + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", create_by='" + create_by + '\'' +
+                ", create_date='" + create_date + '\'' +
+                ", update_by='" + update_by + '\'' +
+                ", update_date='" + update_date + '\'' +
+                '}';
+    }
 
     public String getId() {
         return id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public void setId(String id) {
@@ -223,6 +269,22 @@ public class androidPAD {
 
     public void setStation_id(String station_id) {
         this.station_id = station_id;
+    }
+
+    public String getCellName() {
+        return cellName;
+    }
+
+    public void setCellName(String cellName) {
+        this.cellName = cellName;
+    }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
     }
 
     public String getDel_flag() {

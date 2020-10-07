@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserMapper userMapper;
+    UserMapper userMapper;
     @Override
-    public List<User> getAll(){
-        return userMapper.allUser();
+    public User Login(String login_name) {
+        return userMapper.Login(login_name);
     }
 }

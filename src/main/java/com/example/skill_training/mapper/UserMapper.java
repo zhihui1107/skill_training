@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface UserMapper {
-    @Select("select * from sys_user;")
-    List<User> allUser();
+    /*根据用户名查询用户信息*/
+    @Select("select * from sys_user where login_name=#{login_name};")
+    User Login(String login_name);
 }
