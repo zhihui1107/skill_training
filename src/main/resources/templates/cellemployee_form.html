@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <meta charset="UTF-8">
+    <title>工位与员工关系</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li><a th:href="@{/cellemployee}">工位与员工关系列表</a></li>
+    <li class="active">
+        <a th:href="@{/form_cellemployee}" th:if="${cellemployee_id!=null}">工位与员工关系修改</a>
+        <a th:href="@{/form_cellemployee}" th:if="${cellemployee_id==null}">工位与员工关系添加</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <form method="post" action="/insert_cellemployee" class="layui-form">
+            <input name="id" type="hidden" th:value="${cellemployee_id}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">员工名称</label>
+                <div class="layui-input-inline">
+                    <select th:if="${cellemployee_id==null}" name="employee_id">
+                        <option value=""></option>
+                        <span th:each="employee:${employeeList}">
+                            <option th:value="${employee.id}" th:text="${employee.employeeName}"></option>
+                        </span>
+                    </select>
+                    <select th:if="${cellemployee_id!=null}" name="employee_id">
+                        <option value=""></option>
+                        <option th:value="${cellEmployee.employee_id}" th:text="${employee.employeeName}" selected=""></option>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属工位</label>
+                <div class="layui-input-inline">
+                    <select th:if="${cellemployee_id==null}" name="cell_id">
+                        <option value=""></option>
+                        <span th:each="workCell:${workCellList}">
+                            <option th:value="${workCell.id}" th:text="${workCell.cellName}"></option>
+                        </span>
+                    </select>
+                    <select th:if="${cellemployee_id!=null}" name="cell_id">
+                        <option value=""></option>
+                        <option th:value="${cellEmployee.cell_id}" th:text="${workCell.cellName}" selected=""></option>
+                        <span th:each="otherWorkCell:${otherWorkCellList}">
+                            <option th:value="${otherWorkCell.id}" th:text="${otherWorkCell.cellName}"></option>
+                        </span>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    layui.use(['form'],function () {
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li><a th:href="@{/company}">企业列表</a></li>
+    <li class="active">
+        <a th:href="@{/form_company}" th:if="${own_id!=null}">企业修改</a>
+        <a th:href="@{/form_company}" th:if="${own_id==null}">企业添加</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <form method="post" action="/insert_company" class="layui-form">
+            <input name="id" type="hidden" th:value="${own_id}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">企业名称</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterName" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterName" type="text" th:value="${company.enterName}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">组织机构代码</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterCode" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterCode" type="text" th:value="${company.enterCode}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">企业层次</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterLevel" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterLevel" type="text" th:value="${company.enterLevel}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">企业性质</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterNature" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterNature" type="text" th:value="${company.enterNature}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">企业注册资本</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterCapital" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterCapital" type="text" th:value="${company.enterCapital}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">法人</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterLperson" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterLperson" type="text" th:value="${company.enterLperson}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">法人身份证</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterLpCard" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterLpCard" type="text" th:value="${company.enterLpCard}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">地址</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterAddress" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterAddress" type="text" th:value="${company.enterAddress}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮政编码</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="emailCode" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="emailCode" type="text" th:value="${company.emailCode}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    <input th:if="${own_id==null}" class="layui-input" name="enterRemarks" type="text">
+                    <input th:if="${own_id!=null}" class="layui-input" name="enterRemarks" type="text" th:value="${company.enterRemarks}">
+                </div>
+            </div>
+            <hr />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

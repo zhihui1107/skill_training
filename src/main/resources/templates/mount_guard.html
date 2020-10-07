@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <meta charset="UTF-8">
+    <title>上岗记录</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a th:href="@{/mountguard}">员工工作信息列表</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <div class="demoTable">
+            <form method="post" action="oneMountGuard" class="layui-form">
+                <div class="layui-form-item">
+                    <span>员工号：</span>
+                    <div class="layui-inline">
+                        <input class="layui-input" name="employeeNo" type="text" value="">
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">工位：</label>
+                        <div class="layui-input-inline">
+                            <select name="cellName">
+                                <option value=""></option>
+                                <span th:each="workCell:${workCellList}">
+                                    <option th:value="${workCell.cellName}" th:text="${workCell.cellName}"></option>
+                                </span>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">工作状态：</label>
+                        <div class="layui-input-inline">
+                            <select name="workStatus">
+                                <option value=""></option>
+                                <option value="上班">上班</option>
+                                <option value="下班">下班</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="layui-btn" type="submit">查询</button>
+                </div>
+
+            </form>
+        </div>
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <td>员工编号</td>
+                <td>员工姓名</td>
+                <td>所属部门</td>
+                <td>所属产线</td>
+                <td>所属工站</td>
+                <td>工位</td>
+                <td>上班时间</td>
+                <td>下班时间</td>
+                <td>工作状态</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mountGuard:${mountGuardList}">
+                <td th:text="${mountGuard.employeeNo}"></td>
+                <td th:text="${mountGuard.employeeName}"></td>
+                <td th:text="${mountGuard.office_id}"></td>
+                <td th:text="${mountGuard.lineName}"></td>
+                <td th:text="${mountGuard.stationName}"></td>
+                <td th:text="${mountGuard.cellName}"></td>
+                <td th:text="${mountGuard.clockIn}"></td>
+                <td th:text="${mountGuard.clockOff}"></td>
+                <td th:text="${mountGuard.workStatus}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    layui.use(['form'],function () {
+
+    });
+</script>
+</body>
+</html>

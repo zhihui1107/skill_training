@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <meta charset="UTF-8">
+    <title>企业</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a th:href="@{/company}">企业列表</a>
+    </li>
+    <li><a th:href="@{/form_company}">企业添加</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <div class="demoTable">
+            <form method="post" action="oneCompany">
+                <span>企业名称：</span>
+                <div class="layui-inline">
+                    <input class="layui-input" name="select_name" type="text" value=""/>
+                </div>
+                <button class="layui-btn" type="submit">查询</button>
+            </form>
+        </div>
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <td>企业名称</td>
+                <td>组织机构代码</td>
+                <td>企业层次</td>
+                <td>企业性质</td>
+                <td>企业注册资本</td>
+                <td>法人</td>
+                <td>法人身份证</td>
+                <td>地址</td>
+                <td>邮政编码</td>
+                <td>备注</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${company!=null}">
+                <td th:text="${company.enterName}"></td>
+                <td th:text="${company.enterCode}"></td>
+                <td th:text="${company.enterLevel}"></td>
+                <td th:text="${company.enterNature}"></td>
+                <td th:text="${company.enterCapital}"></td>
+                <td th:text="${company.enterLperson}"></td>
+                <td th:text="${company.enterLpCard}"></td>
+                <td th:text="${company.enterAddress}"></td>
+                <td th:text="${company.emailCode}"></td>
+                <td th:text="${company.enterRemarks}"></td>
+                <td>
+                    <a class="layui-btn layui-btn-xs" th:href="@{/update_company/}+${company.id}">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.enterName}">删除</a>
+                </td>
+            </tr>
+            <tr th:each="company:${companyList}">
+                <td th:text="${company.enterName}"></td>
+                <td th:text="${company.enterCode}"></td>
+                <td th:text="${company.enterLevel}"></td>
+                <td th:text="${company.enterNature}"></td>
+                <td th:text="${company.enterCapital}"></td>
+                <td th:text="${company.enterLperson}"></td>
+                <td th:text="${company.enterLpCard}"></td>
+                <td th:text="${company.enterAddress}"></td>
+                <td th:text="${company.emailCode}"></td>
+                <td th:text="${company.enterRemarks}"></td>
+                <td>
+                    <a class="layui-btn layui-btn-xs" th:href="@{/update_company/}+${company.id}">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_company/}+${company.enterName}">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="pagination"></div>
+</body>
+</html>

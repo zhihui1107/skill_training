@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <meta charset="UTF-8">
+    <title>工厂</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a th:href="@{/factory}">工厂列表</a>
+    </li>
+    <li><a th:href="@{/form_factory}">工厂添加</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active">
+        <div class="demoTable">
+            <form method="post" action="oneFactory">
+                <span>工厂名称：</span>
+                <div class="layui-inline">
+                    <input class="layui-input" name="select_name" type="text" value=""/>
+                </div>
+                <button class="layui-btn" type="submit">查询</button>
+            </form>
+        </div>
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <td>工厂名称</td>
+                <td>所属企业</td>
+                <td>建筑日期</td>
+                <td>地址</td>
+                <td>电话</td>
+                <td>邮政编码</td>
+                <td>建筑面积</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${factory!=null}">
+                <td th:text="${factory.factoryName}"></td>
+                <td th:text="${factory.enterName}"></td>
+                <td th:text="${factory.factoryBuildDate}"></td>
+                <td th:text="${factory.factoryAddress}"></td>
+                <td th:text="${factory.factoryPhone}"></td>
+                <td th:text="${factory.factoryECode}"></td>
+                <td th:text="${factory.factoryBuildM}"></td>
+                <td>
+                    <a class="layui-btn layui-btn-xs" th:href="@{/update_factory/}+${factory.id}">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_factory/}+${factory.factoryName}">删除</a>
+                </td>
+            </tr>
+            <tr th:each="factory:${factoryList}">
+                <td th:text="${factory.factoryName}"></td>
+                <td th:text="${factory.enterName}"></td>
+                <td th:text="${factory.factoryBuildDate}"></td>
+                <td th:text="${factory.factoryAddress}"></td>
+                <td th:text="${factory.factoryPhone}"></td>
+                <td th:text="${factory.factoryECode}"></td>
+                <td th:text="${factory.factoryBuildM}"></td>
+                <td>
+                    <a class="layui-btn layui-btn-xs" th:href="@{/update_factory/}+${factory.id}">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" th:href="@{/delete_factory/}+${factory.factoryName}">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="pagination"></div>
+
+</body>
+</html>
