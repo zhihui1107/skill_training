@@ -23,6 +23,30 @@ public class User {
     private String remarks;
     private String del_flag;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", company_id='" + company_id + '\'' +
+                ", office_id='" + office_id + '\'' +
+                ", login_name='" + login_name + '\'' +
+                ", password='" + password + '\'' +
+                ", no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", user_type='" + user_type + '\'' +
+                ", photo='" + photo + '\'' +
+                ", login_ip='" + login_ip + '\'' +
+                ", login_flag='" + login_flag + '\'' +
+                ", create_by='" + create_by + '\'' +
+                ", update_by='" + update_by + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", del_flag='" + del_flag + '\'' +
+                '}';
+    }
+
     public String getId() {
         return id;
     }

@@ -7,17 +7,9 @@
 <body>
 <table>
     <tbody>
-    <tr th:each="user:${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.company_id}"></td>
-        <td th:text="${user.office_id}"></td>
-        <td th:text="${user.login_name}"></td>
-<!--        <td th:text="${user.password}"></td>-->
-        <td th:text="${user.no}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.phone}"></td>
-        <td th:text="${user.mobile}"></td>
+    <tr th:each="i:${users}">
+        <td th:text="${i.id}"></td>
+        <td th:text="${i.company_id}"></td>
     </tr>
     </tbody>
 </table>
