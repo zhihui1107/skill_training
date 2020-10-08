@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="renderer" content="webkit">
@@ -13,6 +17,18 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
     <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
     <title>生产执行业务系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -36,14 +52,10 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
-                    贤心
+                    <span th:text="${session.name}"></span>
                 </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a th:href="@{/Login}">退出</a></li>
         </ul>
     </div>
 
@@ -51,6 +63,16 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">设备基础资料管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/androidPADs}" target="content_iFrm">PAD</a></dd>
+                        <dd><a th:href="@{/Electronsteelyards}" target="content_iFrm">电子秤</a></dd>
+                        <dd><a th:href="@{/Codeprinters}" target="content_iFrm">打印机</a></dd>
+                        <dd><a th:href="@{/Iphotos}" target="content_iFrm">扫码枪</a></dd>
+                        <dd><a th:href="@{/Cardreaders}" target="content_iFrm">读卡器</a></dd>
+                    </dl>
+                </li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">资源基础资料</a>
                     <dl class="layui-nav-child">
@@ -71,10 +93,10 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">工单管理</a>
+                    <a href="javascript:;">工单管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a>订单信息</a></dd>
-                        <dd><a>工单维护</a></dd>
+                        <dd><a th:href="@{/order}" target="content_iFrm">订单信息</a></dd>
+                        <dd><a th:href="@{/work_order}" target="content_iFrm">工单维护</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">发布商品</a></li>
